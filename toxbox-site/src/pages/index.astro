@@ -1,0 +1,81 @@
+---
+const boothUrl = "https://simijimishijimi.booth.pm/items/7592348";
+const base = import.meta.env.BASE_URL;
+---
+
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>TOXBOX</title>
+    <meta
+      name="description"
+      content="TouchDesigner ベースの VJ ツール「TOXBOX」公式サイト。ドキュメント、リリース情報、購入導線をまとめて提供します。"
+    />
+  </head>
+  <body style="font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; margin: 0;">
+    <main style="max-width: 980px; margin: 0 auto; padding: 56px 20px;">
+      <header style="display: grid; gap: 14px;">
+        <p style="margin: 0; opacity: 0.75;">TouchDesigner VJ Tool</p>
+        <h1 style="margin: 0; font-size: 44px; line-height: 1.08;">TOXBOX</h1>
+        <p style="margin: 0; font-size: 18px; opacity: 0.9;">
+          現場での運用を前提に、セットアップから操作までを最短化した VJ ツール。
+        </p>
+
+        <nav style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;">
+          <a
+            href={boothUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            style="padding: 12px 16px; border-radius: 12px; text-decoration: none; border: 1px solid #000;"
+          >
+            Booth で購入
+          </a>
+          <a
+            href={`${base}docs/getting-started/`}
+            style="padding: 12px 16px; border-radius: 12px; text-decoration: none; border: 1px solid #000;"
+          >
+            ドキュメント
+          </a>
+          <a
+            href={`${base}releases/`}
+            style="padding: 12px 16px; border-radius: 12px; text-decoration: none; border: 1px solid #000;"
+          >
+            リリース
+          </a>
+        </nav>
+      </header>
+
+      <hr style="margin: 36px 0;" />
+
+      <section style="display: grid; gap: 10px;">
+        <h2 style="margin: 0;">主な機能</h2>
+        <ul style="margin: 0; padding-left: 18px; display: grid; gap: 8px;">
+          <li><b>tox 読み込み</b> – 既存シーンを読み込んで、すぐに VJ を開始</li>
+          <li><b>最大 4 レイヤー / 32 シーン</b> – レイヤーフェーダーで透明度を操作</li>
+          <li><b>オーディオ解析</b> – Low/High/Peak を解析してパラメータに参照可能</li>
+          <li><b>ステップシーケンサー</b> – BPM 連動の信号を生成して参照可能</li>
+          <li><b>パフォーマンスモード</b> – tox パラメータを現場向け UI で調整</li>
+          <li><b>ポストエフェクト</b> – 8 種類の FX</li>
+          <li><b>MIDI マッピング</b> – MIDI コントローラーに簡単割り当て</li>
+        </ul>
+        <p style="margin: 0; opacity: 0.75; font-size: 14px;">※ 詳細は Docs に順次掲載します。</p>
+      </section>
+
+      <hr style="margin: 36px 0;" />
+
+      <section style="display: grid; gap: 10px;">
+        <h2 style="margin: 0;">動作環境</h2>
+        <ul style="margin: 0; padding-left: 18px; display: grid; gap: 8px;">
+          <li>TouchDesigner が動作する環境</li>
+          <li>制作: TouchDesigner ver.2025.32050</li>
+        </ul>
+      </section>
+
+      <footer style="margin-top: 44px; opacity: 0.7; font-size: 13px;">
+        <p style="margin: 0;">© TOXBOX</p>
+      </footer>
+    </main>
+  </body>
+</html>
+
