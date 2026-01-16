@@ -1,15 +1,16 @@
-# TOXBOX Web Site – 構築指示書（簡潔版 / Cursor 用）
+# TOXBOX Web Site – 現状確認メモ & 更新手順（簡潔版 / Cursor 用）
 
-最終更新: 2026-01-15  
+最終更新: 2026-01-16  
 目的: **LP / Docs / Releases を 1 つのサイトに統合し、GitHub Pages で公開する**
 
 ---
 
-## 目的（何を作るか）
+## 現状（いま何ができているか）
 
-- **LP**（`/`）: 機能紹介 + Booth への購入導線（CTA）
-- **Docs**（`/docs/*`）: Markdown 中心で運用するドキュメント
-- **Releases**（`/releases`）: GitHub Releases を一次情報として Changelog を表示（サイト側で手入力しない）
+- **LP**（`/`）: `toxbox-site/src/pages/index.astro`（Booth CTA / Docs / Releases への導線あり）
+- **Docs**（`/docs/*`）: `toxbox-site/src/content/docs/docs/` 配下の Markdown / MDX（Starlight）
+- **Releases**（`/releases`）: `toxbox-site/src/pages/releases.astro`（現状はスタブ表示。将来的に GitHub Releases 連動予定）
+- **デプロイ**: `.github/workflows/deploy.yml`（main push で GitHub Pages へ）
 
 ---
 
@@ -25,7 +26,7 @@
 
 - `<GITHUB_USER>`: GitHub ユーザー名
 - `<OWNER>`: 通常 `<GITHUB_USER>` と同じ
-- `<REPO>`: リポジトリ名（例: `toxbox-site`）
+- `<REPO>`: リポジトリ名（例: `TOXBOX-web`）
 - `<BOOTH_URL>`: [Booth の商品ページ URL](https://simijimishijimi.booth.pm/items/7592348)
 
 ---
@@ -34,7 +35,7 @@
 
 - **フレームワーク**: Astro + Starlight
 - **更新の主役**: Docs は Markdown、LP は最小限の Astro、リリースは GitHub Releases
-- **Changelog の正**: GitHub Releases（Web 側で二重管理しない）
+- **Changelog の正**: 将来的に GitHub Releases（現状は `docs/changelog.md` と `/releases` のスタブ）
 - **デプロイ**: main への push で GitHub Pages に自動反映
 
 ---
@@ -42,44 +43,46 @@
 ## 作る/編集するもの（ファイル単位）
 
 - **設定**
-  - `astro.config.mjs`: GitHub Pages 用に `site` と `base` を設定
+  - `toxbox-site/astro.config.mjs`: GitHub Pages 用に `site` と `base` を設定（本リポでは **環境変数** `ASTRO_SITE` / `ASTRO_BASE` で注入）
+  - `.github/workflows/deploy.yml`: build 時に `ASTRO_SITE` / `ASTRO_BASE` を設定して Pages にデプロイ
 - **LP**
-  - `src/pages/index.astro`: 価値訴求 / 機能 / 動作環境 / `<BOOTH_URL>` への CTA / Docs・Releases への導線
+  - `toxbox-site/src/pages/index.astro`: 価値訴求 / 機能 / 動作環境 / `<BOOTH_URL>` への CTA / Docs・Releases への導線
 - **Docs（骨組みだけ作成）**
-  - `src/content/docs/getting-started.md`
-  - `src/content/docs/concept.md`
-  - `src/content/docs/tutorials.md`
-  - `src/content/docs/reference.md`
-  - `src/content/docs/troubleshooting.md`
+  - `toxbox-site/src/content/docs/docs/getting-started.md`
+  - `toxbox-site/src/content/docs/docs/concept.md`
+  - `toxbox-site/src/content/docs/docs/tutorials.md`
+  - `toxbox-site/src/content/docs/docs/reference.md`
+  - `toxbox-site/src/content/docs/docs/troubleshooting.md`
+  - `toxbox-site/src/content/docs/docs/license.md`
+  - `toxbox-site/src/content/docs/docs/changelog.md`
 - **Releases**
-  - `src/pages/releases.astro`: GitHub API から Releases を取得して一覧表示（本文は Markdown を HTML として表示）
-- **デプロイ**
-  - `.github/workflows/deploy.yml`: Astro をビルドして Pages にデプロイ
+  - `toxbox-site/src/pages/releases.astro`: 現状はスタブ（将来的に GitHub API から Releases を取得して表示）
 
 ---
 
 ## 手順（チェックリスト）
 
-- [ ] Astro を Starlight テンプレで初期化して起動確認する
-- [ ] `astro.config.mjs` に `site` と `base` を設定する（Pages はサブパス配下になるため必須）
-- [ ] `src/pages/index.astro` を作成し、LP 要件を満たすようにテキストを入れる（見た目は後回しで OK）
-- [ ] Docs の 5 ファイルを作成し、まずは見出しだけ置く（内容は後で埋める）
-- [ ] `src/pages/releases.astro` を作成し、GitHub Releases を取得して表示できるようにする
-- [ ] GitHub Actions の workflow を追加して Pages 公開を確認する
+- [x] Astro を Starlight テンプレで初期化して起動確認する
+- [x] GitHub Pages 用に `site` と `base` を設定する（本リポは Actions で `ASTRO_SITE` / `ASTRO_BASE` を注入）
+- [x] `toxbox-site/src/pages/index.astro` を作成し、LP 要件を満たすようにテキストを入れる
+- [x] Docs の各ページ（Getting Started / Reference / License / Changelog ほか）を作成し、最低限の骨組みを置く
+- [x] `toxbox-site/src/pages/releases.astro` を作成し、ひとまずリリース表示の場を用意する（GitHub Releases 連動は次ステップ）
+- [x] `.github/workflows/deploy.yml` を追加して Pages 公開を確認する
 
 ---
 
 ## 運用ルール（短縮）
 
 - Docs / LP は Git で管理し、変更は差分で追えるようにする
-- Releases は GitHub Releases だけ更新する（Web 側で Changelog を書かない）
+- リリースの正は GitHub Releases に寄せる（連動が入るまでは `docs/changelog.md` / `/releases` を暫定運用）
 - サポートで得た知見は `troubleshooting.md` に反映する
 
 ---
 
 ## TODO（次ステップ）
 
-- [ ] `<BOOTH_URL>` を確定して LP に反映
+- [ ] `astro.config.mjs` の GitHub リンク（`https://github.com/<OWNER>/<REPO>`）を実値に置換
 - [ ] LP の「推し機能」を 3〜5 個に絞って確定
 - [ ] 動作環境（TouchDesigner / OS / GPU 推奨）を確定
 - [ ] Getting Started を実手順で埋める
+- [ ] `/releases` を GitHub Releases と同期（API 取得 + 表示）し、二重管理を解消する

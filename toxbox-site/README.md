@@ -1,49 +1,46 @@
-# Starlight Starter Kit: Basics
+# TOXBOX Web Site（Astro + Starlight）
 
-[![Built with Starlight](https://astro.badg.es/v2/built-with-starlight/tiny.svg)](https://starlight.astro.build)
+TOXBOX の **LP / Docs / Releases** をまとめた Web サイトです。  
+開発は `toxbox-site/` ディレクトリ内で行います。
 
-```
-npm create astro@latest -- --template starlight
-```
+## ローカル開発
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+前提:
 
-## 🚀 Project Structure
+- Node.js 18+（Actions も 18 を使用）
 
-Inside of your Astro + Starlight project, you'll see the following folders and files:
+コマンド（`toxbox-site/` で実行）:
 
-```
-.
-├── public/
-├── src/
-│   ├── assets/
-│   ├── content/
-│   │   └── docs/
-│   └── content.config.ts
-├── astro.config.mjs
-├── package.json
-└── tsconfig.json
+```bash
+npm ci
+npm run dev
 ```
 
-Starlight looks for `.md` or `.mdx` files in the `src/content/docs/` directory. Each file is exposed as a route based on its file name.
+- 開発サーバー: `http://localhost:4321`
 
-Images can be added to `src/assets/` and embedded in Markdown with a relative link.
+## ビルド / プレビュー
 
-Static assets, like favicons, can be placed in the `public/` directory.
+```bash
+npm run build
+npm run preview
+```
 
-## 🧞 Commands
+## GitHub Pages デプロイ
 
-All commands are run from the root of the project, from a terminal:
+デプロイは `../.github/workflows/deploy.yml` で行います（main への push）。  
+GitHub Pages のサブパス配下で動作させるため、ビルド時に次の環境変数を設定しています:
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+- `ASTRO_SITE`: `https://<owner>.github.io`
+- `ASTRO_BASE`: `/<repo>/`
 
-## 👀 Want to learn more?
+対応する設定は `astro.config.mjs` の `site` / `base` です。
 
-Check out [Starlight’s docs](https://starlight.astro.build/), read [the Astro documentation](https://docs.astro.build), or jump into the [Astro Discord server](https://astro.build/chat).
+## ドキュメントの更新方法
+
+- **Docs 本体**: `src/content/docs/docs/` 配下の `.md` / `.mdx`
+- **Docs の入口**: `src/content/docs/docs/index.mdx`
+- **サイドバー**: `astro.config.mjs` の `starlight().sidebar`
+
+## リンクの置き換え
+
+`astro.config.mjs` の GitHub リンク `https://github.com/<OWNER>/<REPO>` は実リポジトリに合わせて更新してください。
