@@ -35,6 +35,10 @@ GitHub Pages のサブパス配下で動作させるため、ビルド時に次�
 
 対応する設定は `astro.config.mjs` の `site` / `base` です。
 
+補足（非公開ドキュメント）:
+
+- デプロイ詳細: `../docs/deploy.md`
+
 ## ドキュメントの更新方法
 
 - **Docs 本体**: `src/content/docs/docs/` 配下の `.md` / `.mdx`
