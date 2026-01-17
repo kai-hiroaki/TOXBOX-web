@@ -25,4 +25,3 @@ npm run preview
 ## 参照
 
 - 詳細: `toxbox-site/README.md`
-

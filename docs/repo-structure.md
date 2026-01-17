@@ -8,8 +8,8 @@
 
 - **サイト（ビルド対象）**: `toxbox-site/`
 - **デプロイ（GitHub Actions）**: `.github/workflows/deploy.yml`
-- **公開Docs（Starlight）**: `toxbox-site/src/content/docs/`
-- **非公開Docs（開発 / Cursor 用）**: `docs/`
+- **公開 Docs（Starlight）**: `toxbox-site/src/content/docs/`
+- **非公開 Docs（開発 / Cursor 用）**: `docs/`
 
 ## ディレクトリ早見表
 
@@ -30,4 +30,3 @@ TOXBOX-web/
   - Releases ページ（現状はスタブ。将来的に GitHub Releases 連動予定）
 - `toxbox-site/astro.config.mjs`
   - `site` / `base` を環境変数（`ASTRO_SITE` / `ASTRO_BASE`）から設定
-

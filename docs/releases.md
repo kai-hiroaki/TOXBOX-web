@@ -15,4 +15,3 @@
 - GitHub API から Releases を取得して一覧表示する
 - 各リリースの本文（Markdown）を整形して表示する
 - 取得失敗時は `docs/changelog.md` への導線を出す（暫定運用）
-

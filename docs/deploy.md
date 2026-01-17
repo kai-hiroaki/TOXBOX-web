@@ -23,4 +23,3 @@ workflow は build 時に次を設定しています:
 
 - `site: process.env.ASTRO_SITE`
 - `base: process.env.ASTRO_BASE ?? "/"`
-
