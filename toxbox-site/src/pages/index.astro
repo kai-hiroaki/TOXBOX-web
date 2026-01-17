@@ -9,7 +9,7 @@ const base = import.meta.env.BASE_URL;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>TOXBOX</title>
+    <title>TOXBOX - TouchDesigner VJ Tool</title>
     <meta
       name="description"
       content="TouchDesigner ベースの VJ ツール「TOXBOX」公式サイト。ドキュメント、リリース情報、購入導線をまとめて提供します。"
@@ -18,414 +18,573 @@ const base = import.meta.env.BASE_URL;
     <style>
       :root {
         --bg: #050807;
-        --panel: rgba(255, 255, 255, 0.06);
-        --panel2: rgba(255, 255, 255, 0.08);
-        --text: rgba(255, 255, 255, 0.92);
-        --muted: rgba(255, 255, 255, 0.68);
-        --border: rgba(255, 255, 255, 0.12);
-        --shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
-        --accent: #16a34a; /* dark green */
-        --accent2: #22c55e; /* green */
-        --radius: 18px;
+        --text: rgba(255, 255, 255, 0.94);
+        --muted: rgba(255, 255, 255, 0.6);
+        --border: rgba(255, 255, 255, 0.1);
+        --accent: #22c55e;
+        --accent-dark: #16a34a;
+        --accent-glow: rgba(34, 197, 94, 0.2);
       }
 
       * {
         box-sizing: border-box;
-      }
-
-      html,
-      body {
-        height: 100%;
+        margin: 0;
+        padding: 0;
       }
 
       html {
         background: var(--bg);
+        color-scheme: dark;
+        scroll-behavior: smooth;
       }
 
       body {
-        margin: 0;
         color: var(--text);
         background: var(--bg);
         font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
-        line-height: 1.55;
-        position: relative;
-        isolation: isolate;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
       }
 
-      /* 透明(transparent)に落とすと、色空間の補間で段差が見えやすい。
-         背景色(var(--bg))に向かってフェードさせて、境界を作りにくくする。 */
+      /* Background gradient */
       body::before {
         content: "";
         position: fixed;
         inset: 0;
         pointer-events: none;
         z-index: -1;
-        background-repeat: no-repeat;
-        background-image:
-          radial-gradient(1200px 720px at 8% -12%, rgba(34, 197, 94, 0.16) 0%, rgba(34, 197, 94, 0.07) 36%, var(--bg) 72%),
-          radial-gradient(980px 680px at 96% 18%, rgba(20, 83, 45, 0.32) 0%, rgba(20, 83, 45, 0.12) 34%, var(--bg) 70%),
-          radial-gradient(1200px 760px at 50% 112%, rgba(34, 197, 94, 0.10) 0%, rgba(34, 197, 94, 0.04) 38%, var(--bg) 76%),
-          radial-gradient(900px 600px at 45% 40%, rgba(255, 255, 255, 0.028) 0%, rgba(255, 255, 255, 0.012) 40%, var(--bg) 76%),
-          radial-gradient(1600px 1000px at 50% 40%, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.55) 100%);
+        background:
+          radial-gradient(ellipse 80% 50% at 50% -20%, rgba(34, 197, 94, 0.15), transparent),
+          radial-gradient(ellipse 60% 40% at 100% 0%, rgba(20, 83, 45, 0.2), transparent);
       }
 
       a {
         color: inherit;
-      }
-
-      .wrap {
-        max-width: 1080px;
-        margin: 0 auto;
-        padding: 40px 18px 72px;
-      }
-
-      .topbar {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 12px;
-        padding: 10px 12px;
-        border: 1px solid var(--border);
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
-        border-radius: 999px;
-        backdrop-filter: blur(10px);
-      }
-
-      .brand {
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-        font-weight: 720;
-        letter-spacing: 0.02em;
         text-decoration: none;
       }
 
-      .brandLogo {
-        height: 22px;
-        width: auto;
-        display: block;
-      }
-
-      .dot {
-        width: 10px;
-        height: 10px;
-        border-radius: 999px;
-        background: linear-gradient(135deg, var(--accent), var(--accent2));
-        box-shadow: 0 0 0 6px rgba(34, 197, 94, 0.14);
-      }
-
-      .toplinks {
+      /* Header */
+      .header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        padding: 0 24px;
+        height: 64px;
         display: flex;
-        gap: 10px;
+        align-items: center;
+        justify-content: space-between;
+        background: rgba(5, 8, 7, 0.8);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--border);
+      }
+
+      .header-logo {
+        height: 28px;
+        width: auto;
+      }
+
+      .header-nav {
+        display: flex;
+        align-items: center;
+        gap: 32px;
+      }
+
+      .header-links {
+        display: flex;
+        gap: 24px;
+      }
+
+      @media (max-width: 640px) {
+        .header-links {
+          display: none;
+        }
+      }
+
+      .header-link {
+        font-size: 14px;
+        color: var(--muted);
+        transition: color 0.2s;
+      }
+
+      .header-link:hover {
+        color: var(--text);
+      }
+
+      .header-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 16px;
+        background: var(--accent);
+        color: var(--bg);
+        font-size: 14px;
+        font-weight: 600;
+        border-radius: 8px;
+        transition: background 0.2s, transform 0.2s;
+      }
+
+      .header-cta:hover {
+        background: var(--accent-dark);
+        transform: translateY(-1px);
+      }
+
+      /* Booth Button */
+      .btn-booth {
+        background: #FC4D50;
+        color: #fff;
+        box-shadow: 0 0 40px rgba(252, 77, 80, 0.2);
+      }
+
+      .btn-booth:hover {
+        background: #e63e41;
+        transform: translateY(-2px);
+        box-shadow: 0 0 60px rgba(252, 77, 80, 0.3);
+      }
+
+      .btn-booth svg {
+        width: 20px;
+        height: 20px;
+        fill: currentColor;
+      }
+
+      .header-cta.header-booth {
+        background: #FC4D50;
+        color: #fff;
+      }
+
+      .header-cta.header-booth:hover {
+        background: #e63e41;
+      }
+
+      .header-cta.header-booth svg {
+        width: 16px;
+        height: 16px;
+        fill: currentColor;
+      }
+
+      /* Main */
+      main {
+        padding-top: 64px;
+      }
+
+      /* Hero */
+      .hero {
+        min-height: calc(100vh - 64px);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 80px 24px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero-bg {
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+      }
+
+      .hero-bg img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0.25;
+        filter: blur(2px);
+      }
+
+      .hero-bg::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to bottom, var(--bg) 0%, transparent 30%, transparent 70%, var(--bg) 100%);
+      }
+
+      .hero-content {
+        max-width: 800px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 14px;
+        background: rgba(34, 197, 94, 0.1);
+        border: 1px solid rgba(34, 197, 94, 0.3);
+        border-radius: 999px;
+        font-size: 13px;
+        color: var(--accent);
+        margin-bottom: 24px;
+      }
+
+      .hero h1 {
+        font-size: clamp(40px, 8vw, 72px);
+        font-weight: 800;
+        line-height: 1.1;
+        letter-spacing: -0.03em;
+        margin-bottom: 20px;
+      }
+
+      .hero h1 span {
+        background: linear-gradient(135deg, var(--accent) 0%, #4ade80 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .hero-lead {
+        font-size: clamp(16px, 2.5vw, 20px);
+        color: var(--muted);
+        max-width: 600px;
+        margin: 0 auto 40px;
+      }
+
+      .hero-actions {
+        display: flex;
+        gap: 16px;
+        justify-content: center;
         flex-wrap: wrap;
-        justify-content: flex-end;
       }
 
       .btn {
         display: inline-flex;
         align-items: center;
-        justify-content: center;
-        gap: 10px;
-        padding: 12px 14px;
-        border-radius: 999px;
-        text-decoration: none;
+        gap: 8px;
+        padding: 14px 28px;
+        font-size: 16px;
+        font-weight: 600;
+        border-radius: 12px;
+        transition: all 0.2s;
+      }
+
+      .btn-primary {
+        background: var(--accent);
+        color: var(--bg);
+        box-shadow: 0 0 40px var(--accent-glow);
+      }
+
+      .btn-primary:hover {
+        background: var(--accent-dark);
+        transform: translateY(-2px);
+        box-shadow: 0 0 60px var(--accent-glow);
+      }
+
+      .btn-secondary {
+        background: rgba(255, 255, 255, 0.05);
         border: 1px solid var(--border);
-        background: rgba(255, 255, 255, 0.03);
         color: var(--text);
-        transition: transform 140ms ease, background 140ms ease, border-color 140ms ease;
-        will-change: transform;
       }
 
-      .btn:hover {
-        transform: translateY(-1px);
-        background: rgba(255, 255, 255, 0.06);
-        border-color: rgba(255, 255, 255, 0.18);
+      .btn-secondary:hover {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.2);
       }
 
-      .btn.primary {
-        border-color: rgba(34, 197, 94, 0.42);
-        background: linear-gradient(135deg, rgba(34, 197, 94, 0.92), rgba(20, 83, 45, 0.85));
-        color: #0a0d16;
+      /* Features */
+      .features {
+        padding: 100px 24px;
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+
+      .section-label {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--accent);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 12px;
+      }
+
+      .section-title {
+        font-size: clamp(28px, 5vw, 40px);
         font-weight: 700;
-        box-shadow: 0 20px 50px rgba(34, 197, 94, 0.14);
+        letter-spacing: -0.02em;
+        margin-bottom: 60px;
       }
 
-      .hero {
-        margin-top: 18px;
-        padding: 28px;
-        border-radius: calc(var(--radius) + 8px);
-        border: 1px solid var(--border);
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
-        box-shadow: var(--shadow);
-        overflow: hidden;
-        position: relative;
-      }
-
-      .hero:before {
-        content: "";
-        position: absolute;
-        inset: -2px;
-        background: radial-gradient(700px 320px at 20% 10%, rgba(34, 197, 94, 0.18), transparent 60%),
-          radial-gradient(700px 320px at 80% 0%, rgba(20, 83, 45, 0.26), transparent 55%);
-        pointer-events: none;
-      }
-
-      .heroGrid {
-        position: relative;
+      .features-grid {
         display: grid;
-        grid-template-columns: 1.2fr 1fr;
+        grid-template-columns: repeat(3, 1fr);
         gap: 24px;
-        align-items: center;
       }
 
       @media (max-width: 900px) {
-        .heroGrid {
+        .features-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (max-width: 600px) {
+        .features-grid {
           grid-template-columns: 1fr;
         }
       }
 
-      .kicker {
-        margin: 0;
-        color: var(--muted);
-        font-size: 13px;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-      }
-
-      h1 {
-        margin: 10px 0 10px;
-        font-size: 52px;
-        line-height: 1.05;
-        letter-spacing: -0.02em;
-      }
-
-      @media (max-width: 520px) {
-        h1 {
-          font-size: 44px;
-        }
-      }
-
-      .lead {
-        margin: 0;
-        font-size: 18px;
-        color: rgba(255, 255, 255, 0.82);
-      }
-
-      .chips {
-        margin-top: 16px;
-        display: flex;
-        gap: 10px;
-        flex-wrap: wrap;
-      }
-
-      .chip {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 8px 10px;
-        border-radius: 999px;
+      .feature-card {
+        padding: 28px;
+        background: rgba(255, 255, 255, 0.02);
         border: 1px solid var(--border);
-        background: rgba(255, 255, 255, 0.03);
-        color: rgba(255, 255, 255, 0.76);
-        font-size: 13px;
+        border-radius: 16px;
+        transition: all 0.3s;
       }
 
-      .heroActions {
-        margin-top: 18px;
+      .feature-card:hover {
+        background: rgba(255, 255, 255, 0.04);
+        border-color: rgba(255, 255, 255, 0.15);
+        transform: translateY(-4px);
+      }
+
+      .feature-icon {
+        width: 48px;
+        height: 48px;
         display: flex;
-        gap: 10px;
-        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        background: rgba(34, 197, 94, 0.1);
+        border-radius: 12px;
+        margin-bottom: 16px;
+        font-size: 24px;
       }
 
-      .shot {
-        border-radius: calc(var(--radius) + 6px);
-        border: 1px solid rgba(255, 255, 255, 0.14);
-        background: rgba(0, 0, 0, 0.25);
+      .feature-title {
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 8px;
+      }
+
+      .feature-desc {
+        font-size: 14px;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+
+      /* Video */
+      .video-section {
+        padding: 80px 24px;
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      .video-wrapper {
+        aspect-ratio: 16 / 9;
+        border-radius: 20px;
         overflow: hidden;
-        aspect-ratio: 1 / 1;
-        position: relative;
+        border: 1px solid var(--border);
+        background: #000;
       }
 
-      .shot img {
+      .video-wrapper iframe {
         width: 100%;
         height: 100%;
-        object-fit: cover;
-        filter: saturate(1.15) contrast(1.02);
-        transform: scale(1.02);
+        border: 0;
       }
 
-      .section {
-        margin-top: 22px;
-        padding: 24px;
-        border-radius: var(--radius);
-        border: 1px solid var(--border);
-        background: rgba(255, 255, 255, 0.03);
+      /* CTA */
+      .cta {
+        padding: 100px 24px;
+        text-align: center;
       }
 
-      .section h2 {
-        margin: 0 0 12px;
-        font-size: 18px;
-        letter-spacing: 0.01em;
+      .cta-inner {
+        max-width: 700px;
+        margin: 0 auto;
+        padding: 60px 40px;
+        background: linear-gradient(135deg, rgba(34, 197, 94, 0.08) 0%, rgba(20, 83, 45, 0.08) 100%);
+        border: 1px solid rgba(34, 197, 94, 0.2);
+        border-radius: 24px;
       }
 
-      .grid {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 14px;
-      }
-
-      @media (max-width: 900px) {
-        .grid {
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-        }
-      }
-
-      @media (max-width: 560px) {
-        .grid {
-          grid-template-columns: 1fr;
-        }
-      }
-
-      .card {
-        padding: 14px 14px 16px;
-        border-radius: var(--radius);
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
-        min-height: 112px;
-      }
-
-      .cardTitle {
-        margin: 0 0 6px;
+      .cta h2 {
+        font-size: clamp(24px, 4vw, 36px);
         font-weight: 700;
-        letter-spacing: 0.01em;
+        margin-bottom: 16px;
       }
 
-      .cardBody {
-        margin: 0;
-        color: rgba(255, 255, 255, 0.74);
-        font-size: 14px;
+      .cta p {
+        color: var(--muted);
+        margin-bottom: 32px;
       }
 
-      .note {
-        margin: 14px 0 0;
-        color: rgba(255, 255, 255, 0.62);
-        font-size: 13px;
-      }
-
+      /* Footer */
       .footer {
-        margin-top: 26px;
-        padding-top: 18px;
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-        color: rgba(255, 255, 255, 0.6);
-        font-size: 13px;
+        padding: 40px 24px;
+        border-top: 1px solid var(--border);
         display: flex;
         justify-content: space-between;
-        gap: 12px;
+        align-items: center;
         flex-wrap: wrap;
+        gap: 16px;
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+
+      .footer-left {
+        display: flex;
+        align-items: center;
+        gap: 24px;
+      }
+
+      .footer-logo {
+        height: 24px;
+        opacity: 0.6;
+      }
+
+      .footer-links {
+        display: flex;
+        gap: 20px;
+      }
+
+      .footer-link {
+        font-size: 13px;
+        color: var(--muted);
+        transition: color 0.2s;
+      }
+
+      .footer-link:hover {
+        color: var(--text);
+      }
+
+      .footer-copy {
+        font-size: 13px;
+        color: var(--muted);
       }
     </style>
   </head>
   <body>
-    <main class="wrap">
-      <header class="topbar">
-        <a class="brand" href={base} aria-label="TOXBOX Home">
-          <picture>
-            <source srcset={`${base}logo-light.svg`} media="(prefers-color-scheme: light)" />
-            <img class="brandLogo" src={`${base}logo-dark.svg`} alt="TOXBOX" />
-          </picture>
+    <!-- Header -->
+    <header class="header">
+      <a href={base}>
+        <picture>
+          <source srcset={`${base}logo-light.svg`} media="(prefers-color-scheme: light)" />
+          <img class="header-logo" src={`${base}logo-dark.svg`} alt="TOXBOX" />
+        </picture>
+      </a>
+      <nav class="header-nav">
+        <div class="header-links">
+          <a class="header-link" href="#features">機能</a>
+          <a class="header-link" href="#video">動画</a>
+          <a class="header-link" href={`${base}docs/`}>Docs</a>
+        </div>
+        <a class="header-cta header-booth" href={boothUrl} target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 6h-2c0-2.21-1.79-4-4-4S8 3.79 8 6H6c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-6-2c1.1 0 2 .9 2 2h-4c0-1.1.9-2 2-2zm6 16H6V8h2v2c0 .55.45 1 1 1s1-.45 1-1V8h4v2c0 .55.45 1 1 1s1-.45 1-1V8h2v12z"/></svg>
+          BOOTH
         </a>
-        <nav class="toplinks" aria-label="Primary">
-          <a class="btn" href={`${base}docs/getting-started/`}>Docs</a>
-          <a class="btn" href={`${base}releases/`}>Releases</a>
-          <a class="btn primary" href={boothUrl} target="_blank" rel="noopener noreferrer">Booth で入手</a>
-        </nav>
-      </header>
+      </nav>
+    </header>
 
+    <main>
+      <!-- Hero -->
       <section class="hero">
-        <div class="heroGrid">
-          <div>
-            <p class="kicker">TouchDesigner VJ Tool</p>
-            <h1>TOXBOX</h1>
-            <p class="lead">
-              現場での運用を前提に、セットアップから操作までを最短化。
-              レイヤー／オーディオ／シーケンス／MIDI を一つの流れで回せる VJ ツール。
-            </p>
-            <div class="chips" aria-label="Highlights">
-              <span class="chip">4 Layers / 32 Scenes</span>
-              <span class="chip">Audio Analysis</span>
-              <span class="chip">BPM Sequencer</span>
-              <span class="chip">MIDI Mapping</span>
-              <span class="chip">Post FX ×8</span>
-            </div>
-            <div class="heroActions">
-              <a class="btn primary" href={boothUrl} target="_blank" rel="noopener noreferrer">今すぐ入手</a>
-              <a class="btn" href={`${base}docs/getting-started/`}>最短で始める</a>
-              <a class="btn" href={`${base}releases/`}>更新履歴を見る</a>
-            </div>
-            <p class="note">※ 詳細な手順は Docs にまとめています。</p>
+        <div class="hero-bg">
+          <img src={thumbnail.src} alt="" loading="eager" />
+        </div>
+        <div class="hero-content">
+          <div class="hero-badge">
+            <span>TouchDesigner VJ Tool</span>
           </div>
-
-          <div class="shot" aria-label="Visual preview">
-            <img src={thumbnail.src} width={thumbnail.width} height={thumbnail.height} alt="TOXBOX preview" loading="eager" />
+          <h1>ライブ運用を<br /><span>最短化</span>する</h1>
+          <p class="hero-lead">
+            tox資産を読み込み、4レイヤーで素早くミックス。<br />
+            オーディオ・シーケンス・MIDIを一気に回せるVJツール。
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-booth" href={boothUrl} target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 6h-2c0-2.21-1.79-4-4-4S8 3.79 8 6H6c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-6-2c1.1 0 2 .9 2 2h-4c0-1.1.9-2 2-2zm6 16H6V8h2v2c0 .55.45 1 1 1s1-.45 1-1V8h4v2c0 .55.45 1 1 1s1-.45 1-1V8h2v12z"/></svg>
+              BOOTHで入手
+            </a>
+            <a class="btn btn-secondary" href={`${base}docs/getting-started/`}>
+              ドキュメント
+            </a>
           </div>
         </div>
       </section>
 
-      <section class="section">
-        <h2>主な機能</h2>
-        <div class="grid">
-          <div class="card">
-            <p class="cardTitle">tox 読み込み</p>
-            <p class="cardBody">既存シーンを取り込んで、すぐにスタート。</p>
+      <!-- Features -->
+      <section class="features" id="features">
+        <p class="section-label">Features</p>
+        <h2 class="section-title">現場で使える機能を、ひとまとめに</h2>
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">📦</div>
+            <h3 class="feature-title">tox 読み込み</h3>
+            <p class="feature-desc">既存シーンをドラッグ&ドロップで取り込み、すぐにスタート。</p>
           </div>
-          <div class="card">
-            <p class="cardTitle">レイヤー・ミックス</p>
-            <p class="cardBody">最大 4 レイヤー / 32 シーン。フェーダーで素早く合成。</p>
+          <div class="feature-card">
+            <div class="feature-icon">🎚️</div>
+            <h3 class="feature-title">4レイヤー / 32シーン</h3>
+            <p class="feature-desc">フェーダーで素早く合成。直感的なレイヤーミックス。</p>
           </div>
-          <div class="card">
-            <p class="cardTitle">Audio Analysis</p>
-            <p class="cardBody">Low / High / Peak を解析し、パラメータへ参照可能。</p>
+          <div class="feature-card">
+            <div class="feature-icon">🎵</div>
+            <h3 class="feature-title">Audio Analysis</h3>
+            <p class="feature-desc">Low / High / Peak を解析し、パラメータへ即座に反映。</p>
           </div>
-          <div class="card">
-            <p class="cardTitle">Step Sequencer</p>
-            <p class="cardBody">BPM 連動の信号生成で、動きの骨格を作る。</p>
+          <div class="feature-card">
+            <div class="feature-icon">⏱️</div>
+            <h3 class="feature-title">BPM Sequencer</h3>
+            <p class="feature-desc">BPM連動の信号生成で、動きの骨格を作る。</p>
           </div>
-          <div class="card">
-            <p class="cardTitle">Performance Mode</p>
-            <p class="cardBody">現場向け UI で、操作を迷わせない。</p>
+          <div class="feature-card">
+            <div class="feature-icon">🎛️</div>
+            <h3 class="feature-title">MIDI Mapping</h3>
+            <p class="feature-desc">お気に入りのコントローラーで指先操作。</p>
           </div>
-          <div class="card">
-            <p class="cardTitle">MIDI / Post FX</p>
-            <p class="cardBody">コントローラーに割り当てて指先で操作。FX で仕上げまで。</p>
-          </div>
-        </div>
-      </section>
-
-      <section class="section">
-        <h2>動作環境</h2>
-        <div class="grid">
-          <div class="card">
-            <p class="cardTitle">必要環境</p>
-            <p class="cardBody">TouchDesigner が動作する環境</p>
-          </div>
-          <div class="card">
-            <p class="cardTitle">制作バージョン</p>
-            <p class="cardBody">TouchDesigner ver.2025.32050</p>
-          </div>
-          <div class="card">
-            <p class="cardTitle">困ったとき</p>
-            <p class="cardBody">
-              <a href={`${base}docs/troubleshooting/`}>Troubleshooting</a> を参照してください。
-            </p>
+          <div class="feature-card">
+            <div class="feature-icon">✨</div>
+            <h3 class="feature-title">Post FX × 8</h3>
+            <p class="feature-desc">豊富なエフェクトで仕上げまで完結。</p>
           </div>
         </div>
       </section>
 
-      <footer class="footer">
-        <span>© TOXBOX</span>
-        <span style="color: rgba(255,255,255,0.52);">Built with Astro + Starlight</span>
-      </footer>
+      <!-- Video -->
+      <section class="video-section" id="video">
+        <p class="section-label">Demo</p>
+        <h2 class="section-title">紹介動画</h2>
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube-nocookie.com/embed/SHeJOBs7QTI?rel=0"
+            title="TOXBOX 紹介動画"
+            loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+          ></iframe>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section class="cta">
+        <div class="cta-inner">
+          <h2>今すぐTOXBOXを始めよう</h2>
+          <p>TouchDesigner ver.2025.32050 以降で動作します</p>
+          <a class="btn btn-booth" href={boothUrl} target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 6h-2c0-2.21-1.79-4-4-4S8 3.79 8 6H6c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-6-2c1.1 0 2 .9 2 2h-4c0-1.1.9-2 2-2zm6 16H6V8h2v2c0 .55.45 1 1 1s1-.45 1-1V8h4v2c0 .55.45 1 1 1s1-.45 1-1V8h2v12z"/></svg>
+            BOOTHで入手
+          </a>
+        </div>
+      </section>
     </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-left">
+        <picture>
+          <source srcset={`${base}logo-light.svg`} media="(prefers-color-scheme: light)" />
+          <img class="footer-logo" src={`${base}logo-dark.svg`} alt="TOXBOX" />
+        </picture>
+        <div class="footer-links">
+          <a class="footer-link" href={`${base}docs/`}>Docs</a>
+          <a class="footer-link" href={`${base}docs/troubleshooting/`}>Troubleshooting</a>
+        </div>
+      </div>
+      <p class="footer-copy">© TOXBOX</p>
+    </footer>
   </body>
 </html>
-
