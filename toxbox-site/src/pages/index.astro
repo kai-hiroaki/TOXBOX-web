@@ -1,4 +1,6 @@
 ---
+import houston from "../assets/houston.webp";
+
 const boothUrl = "https://simijimishijimi.booth.pm/items/7592348";
 const base = import.meta.env.BASE_URL;
 ---
@@ -12,68 +14,421 @@ const base = import.meta.env.BASE_URL;
       name="description"
       content="TouchDesigner ベースの VJ ツール「TOXBOX」公式サイト。ドキュメント、リリース情報、購入導線をまとめて提供します。"
     />
-  </head>
-  <body style="font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; margin: 0;">
-    <main style="max-width: 980px; margin: 0 auto; padding: 56px 20px;">
-      <header style="display: grid; gap: 14px;">
-        <p style="margin: 0; opacity: 0.75;">TouchDesigner VJ Tool</p>
-        <h1 style="margin: 0; font-size: 44px; line-height: 1.08;">TOXBOX</h1>
-        <p style="margin: 0; font-size: 18px; opacity: 0.9;">
-          現場での運用を前提に、セットアップから操作までを最短化した VJ ツール。
-        </p>
+    <style>
+      :root {
+        --bg: #050807;
+        --panel: rgba(255, 255, 255, 0.06);
+        --panel2: rgba(255, 255, 255, 0.08);
+        --text: rgba(255, 255, 255, 0.92);
+        --muted: rgba(255, 255, 255, 0.68);
+        --border: rgba(255, 255, 255, 0.12);
+        --shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+        --accent: #16a34a; /* dark green */
+        --accent2: #22c55e; /* green */
+        --radius: 18px;
+      }
 
-        <nav style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;">
-          <a
-            href={boothUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            style="padding: 12px 16px; border-radius: 12px; text-decoration: none; border: 1px solid #000;"
-          >
-            Booth で購入
-          </a>
-          <a
-            href={`${base}docs/getting-started/`}
-            style="padding: 12px 16px; border-radius: 12px; text-decoration: none; border: 1px solid #000;"
-          >
-            ドキュメント
-          </a>
-          <a
-            href={`${base}releases/`}
-            style="padding: 12px 16px; border-radius: 12px; text-decoration: none; border: 1px solid #000;"
-          >
-            リリース
-          </a>
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        height: 100%;
+      }
+
+      html {
+        background: var(--bg);
+      }
+
+      body {
+        margin: 0;
+        color: var(--text);
+        background: var(--bg);
+        font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+        line-height: 1.55;
+        position: relative;
+        isolation: isolate;
+      }
+
+      /* 透明(transparent)に落とすと、色空間の補間で段差が見えやすい。
+         背景色(var(--bg))に向かってフェードさせて、境界を作りにくくする。 */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: -1;
+        background-repeat: no-repeat;
+        background-image:
+          radial-gradient(1200px 720px at 8% -12%, rgba(34, 197, 94, 0.16) 0%, rgba(34, 197, 94, 0.07) 36%, var(--bg) 72%),
+          radial-gradient(980px 680px at 96% 18%, rgba(20, 83, 45, 0.32) 0%, rgba(20, 83, 45, 0.12) 34%, var(--bg) 70%),
+          radial-gradient(1200px 760px at 50% 112%, rgba(34, 197, 94, 0.10) 0%, rgba(34, 197, 94, 0.04) 38%, var(--bg) 76%),
+          radial-gradient(900px 600px at 45% 40%, rgba(255, 255, 255, 0.028) 0%, rgba(255, 255, 255, 0.012) 40%, var(--bg) 76%),
+          radial-gradient(1600px 1000px at 50% 40%, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.55) 100%);
+      }
+
+      a {
+        color: inherit;
+      }
+
+      .wrap {
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: 40px 18px 72px;
+      }
+
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 10px 12px;
+        border: 1px solid var(--border);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+        border-radius: 999px;
+        backdrop-filter: blur(10px);
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 720;
+        letter-spacing: 0.02em;
+        text-decoration: none;
+      }
+
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 999px;
+        background: linear-gradient(135deg, var(--accent), var(--accent2));
+        box-shadow: 0 0 0 6px rgba(34, 197, 94, 0.14);
+      }
+
+      .toplinks {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 12px 14px;
+        border-radius: 999px;
+        text-decoration: none;
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.03);
+        color: var(--text);
+        transition: transform 140ms ease, background 140ms ease, border-color 140ms ease;
+        will-change: transform;
+      }
+
+      .btn:hover {
+        transform: translateY(-1px);
+        background: rgba(255, 255, 255, 0.06);
+        border-color: rgba(255, 255, 255, 0.18);
+      }
+
+      .btn.primary {
+        border-color: rgba(34, 197, 94, 0.42);
+        background: linear-gradient(135deg, rgba(34, 197, 94, 0.92), rgba(20, 83, 45, 0.85));
+        color: #0a0d16;
+        font-weight: 700;
+        box-shadow: 0 20px 50px rgba(34, 197, 94, 0.14);
+      }
+
+      .hero {
+        margin-top: 18px;
+        padding: 28px;
+        border-radius: calc(var(--radius) + 8px);
+        border: 1px solid var(--border);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+        box-shadow: var(--shadow);
+        overflow: hidden;
+        position: relative;
+      }
+
+      .hero:before {
+        content: "";
+        position: absolute;
+        inset: -2px;
+        background: radial-gradient(700px 320px at 20% 10%, rgba(34, 197, 94, 0.18), transparent 60%),
+          radial-gradient(700px 320px at 80% 0%, rgba(20, 83, 45, 0.26), transparent 55%);
+        pointer-events: none;
+      }
+
+      .heroGrid {
+        position: relative;
+        display: grid;
+        grid-template-columns: 1.2fr 1fr;
+        gap: 24px;
+        align-items: center;
+      }
+
+      @media (max-width: 900px) {
+        .heroGrid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .kicker {
+        margin: 0;
+        color: var(--muted);
+        font-size: 13px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        margin: 10px 0 10px;
+        font-size: 52px;
+        line-height: 1.05;
+        letter-spacing: -0.02em;
+      }
+
+      @media (max-width: 520px) {
+        h1 {
+          font-size: 44px;
+        }
+      }
+
+      .lead {
+        margin: 0;
+        font-size: 18px;
+        color: rgba(255, 255, 255, 0.82);
+      }
+
+      .chips {
+        margin-top: 16px;
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 10px;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.03);
+        color: rgba(255, 255, 255, 0.76);
+        font-size: 13px;
+      }
+
+      .heroActions {
+        margin-top: 18px;
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .shot {
+        border-radius: calc(var(--radius) + 6px);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        background: rgba(0, 0, 0, 0.25);
+        overflow: hidden;
+        aspect-ratio: 4 / 3;
+        position: relative;
+      }
+
+      .shot img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: saturate(1.15) contrast(1.02);
+        transform: scale(1.02);
+      }
+
+      .shotTag {
+        position: absolute;
+        left: 12px;
+        bottom: 12px;
+        padding: 8px 10px;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        background: rgba(0, 0, 0, 0.35);
+        color: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(8px);
+        font-size: 13px;
+      }
+
+      .section {
+        margin-top: 22px;
+        padding: 24px;
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.03);
+      }
+
+      .section h2 {
+        margin: 0 0 12px;
+        font-size: 18px;
+        letter-spacing: 0.01em;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      @media (max-width: 900px) {
+        .grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 560px) {
+        .grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .card {
+        padding: 14px 14px 16px;
+        border-radius: var(--radius);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+        min-height: 112px;
+      }
+
+      .cardTitle {
+        margin: 0 0 6px;
+        font-weight: 700;
+        letter-spacing: 0.01em;
+      }
+
+      .cardBody {
+        margin: 0;
+        color: rgba(255, 255, 255, 0.74);
+        font-size: 14px;
+      }
+
+      .note {
+        margin: 14px 0 0;
+        color: rgba(255, 255, 255, 0.62);
+        font-size: 13px;
+      }
+
+      .footer {
+        margin-top: 26px;
+        padding-top: 18px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 13px;
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="wrap">
+      <header class="topbar">
+        <a class="brand" href={base} aria-label="TOXBOX Home">
+          <span class="dot" aria-hidden="true"></span>
+          <span>TOXBOX</span>
+        </a>
+        <nav class="toplinks" aria-label="Primary">
+          <a class="btn" href={`${base}docs/getting-started/`}>Docs</a>
+          <a class="btn" href={`${base}releases/`}>Releases</a>
+          <a class="btn primary" href={boothUrl} target="_blank" rel="noopener noreferrer">Booth で入手</a>
         </nav>
       </header>
 
-      <hr style="margin: 36px 0;" />
+      <section class="hero">
+        <div class="heroGrid">
+          <div>
+            <p class="kicker">TouchDesigner VJ Tool</p>
+            <h1>TOXBOX</h1>
+            <p class="lead">
+              現場での運用を前提に、セットアップから操作までを最短化。
+              レイヤー／オーディオ／シーケンス／MIDI を一つの流れで回せる VJ ツール。
+            </p>
+            <div class="chips" aria-label="Highlights">
+              <span class="chip">4 Layers / 32 Scenes</span>
+              <span class="chip">Audio Analysis</span>
+              <span class="chip">BPM Sequencer</span>
+              <span class="chip">MIDI Mapping</span>
+              <span class="chip">Post FX ×8</span>
+            </div>
+            <div class="heroActions">
+              <a class="btn primary" href={boothUrl} target="_blank" rel="noopener noreferrer">今すぐ入手</a>
+              <a class="btn" href={`${base}docs/getting-started/`}>最短で始める</a>
+              <a class="btn" href={`${base}releases/`}>更新履歴を見る</a>
+            </div>
+            <p class="note">※ 詳細な手順は Docs にまとめています。</p>
+          </div>
 
-      <section style="display: grid; gap: 10px;">
-        <h2 style="margin: 0;">主な機能</h2>
-        <ul style="margin: 0; padding-left: 18px; display: grid; gap: 8px;">
-          <li><b>tox 読み込み</b> – 既存シーンを読み込んで、すぐに VJ を開始</li>
-          <li><b>最大 4 レイヤー / 32 シーン</b> – レイヤーフェーダーで透明度を操作</li>
-          <li><b>オーディオ解析</b> – Low/High/Peak を解析してパラメータに参照可能</li>
-          <li><b>ステップシーケンサー</b> – BPM 連動の信号を生成して参照可能</li>
-          <li><b>パフォーマンスモード</b> – tox パラメータを現場向け UI で調整</li>
-          <li><b>ポストエフェクト</b> – 8 種類の FX</li>
-          <li><b>MIDI マッピング</b> – MIDI コントローラーに簡単割り当て</li>
-        </ul>
-        <p style="margin: 0; opacity: 0.75; font-size: 14px;">※ 詳細は Docs に順次掲載します。</p>
+          <div class="shot" aria-label="Visual preview">
+            <img src={houston.src} width={houston.width} height={houston.height} alt="TOXBOX visual preview" loading="eager" />
+            <div class="shotTag">Live-ready workflow</div>
+          </div>
+        </div>
       </section>
 
-      <hr style="margin: 36px 0;" />
-
-      <section style="display: grid; gap: 10px;">
-        <h2 style="margin: 0;">動作環境</h2>
-        <ul style="margin: 0; padding-left: 18px; display: grid; gap: 8px;">
-          <li>TouchDesigner が動作する環境</li>
-          <li>制作: TouchDesigner ver.2025.32050</li>
-        </ul>
+      <section class="section">
+        <h2>主な機能</h2>
+        <div class="grid">
+          <div class="card">
+            <p class="cardTitle">tox 読み込み</p>
+            <p class="cardBody">既存シーンを取り込んで、すぐにスタート。</p>
+          </div>
+          <div class="card">
+            <p class="cardTitle">レイヤー・ミックス</p>
+            <p class="cardBody">最大 4 レイヤー / 32 シーン。フェーダーで素早く合成。</p>
+          </div>
+          <div class="card">
+            <p class="cardTitle">Audio Analysis</p>
+            <p class="cardBody">Low / High / Peak を解析し、パラメータへ参照可能。</p>
+          </div>
+          <div class="card">
+            <p class="cardTitle">Step Sequencer</p>
+            <p class="cardBody">BPM 連動の信号生成で、動きの骨格を作る。</p>
+          </div>
+          <div class="card">
+            <p class="cardTitle">Performance Mode</p>
+            <p class="cardBody">現場向け UI で、操作を迷わせない。</p>
+          </div>
+          <div class="card">
+            <p class="cardTitle">MIDI / Post FX</p>
+            <p class="cardBody">コントローラーに割り当てて指先で操作。FX で仕上げまで。</p>
+          </div>
+        </div>
       </section>
 
-      <footer style="margin-top: 44px; opacity: 0.7; font-size: 13px;">
-        <p style="margin: 0;">© TOXBOX</p>
+      <section class="section">
+        <h2>動作環境</h2>
+        <div class="grid">
+          <div class="card">
+            <p class="cardTitle">必要環境</p>
+            <p class="cardBody">TouchDesigner が動作する環境</p>
+          </div>
+          <div class="card">
+            <p class="cardTitle">制作バージョン</p>
+            <p class="cardBody">TouchDesigner ver.2025.32050</p>
+          </div>
+          <div class="card">
+            <p class="cardTitle">困ったとき</p>
+            <p class="cardBody">
+              <a href={`${base}docs/troubleshooting/`}>Troubleshooting</a> を参照してください。
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <span>© TOXBOX</span>
+        <span style="color: rgba(255,255,255,0.52);">Built with Astro + Starlight</span>
       </footer>
     </main>
   </body>
