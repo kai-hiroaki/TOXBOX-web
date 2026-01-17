@@ -1,5 +1,5 @@
 ---
-import houston from "../assets/houston.webp";
+import thumbnail from "../assets/thumbnail.webp";
 
 const boothUrl = "https://simijimishijimi.booth.pm/items/7592348";
 const base = import.meta.env.BASE_URL;
@@ -14,6 +14,7 @@ const base = import.meta.env.BASE_URL;
       name="description"
       content="TouchDesigner ベースの VJ ツール「TOXBOX」公式サイト。ドキュメント、リリース情報、購入導線をまとめて提供します。"
     />
+    <link rel="icon" href={`${base}favicon.svg`} />
     <style>
       :root {
         --bg: #050807;
@@ -97,6 +98,12 @@ const base = import.meta.env.BASE_URL;
         font-weight: 720;
         letter-spacing: 0.02em;
         text-decoration: none;
+      }
+
+      .brandLogo {
+        height: 22px;
+        width: auto;
+        display: block;
       }
 
       .dot {
@@ -235,7 +242,7 @@ const base = import.meta.env.BASE_URL;
         border: 1px solid rgba(255, 255, 255, 0.14);
         background: rgba(0, 0, 0, 0.25);
         overflow: hidden;
-        aspect-ratio: 4 / 3;
+        aspect-ratio: 1 / 1;
         position: relative;
       }
 
@@ -245,19 +252,6 @@ const base = import.meta.env.BASE_URL;
         object-fit: cover;
         filter: saturate(1.15) contrast(1.02);
         transform: scale(1.02);
-      }
-
-      .shotTag {
-        position: absolute;
-        left: 12px;
-        bottom: 12px;
-        padding: 8px 10px;
-        border-radius: 999px;
-        border: 1px solid rgba(255, 255, 255, 0.14);
-        background: rgba(0, 0, 0, 0.35);
-        color: rgba(255, 255, 255, 0.8);
-        backdrop-filter: blur(8px);
-        font-size: 13px;
       }
 
       .section {
@@ -335,8 +329,10 @@ const base = import.meta.env.BASE_URL;
     <main class="wrap">
       <header class="topbar">
         <a class="brand" href={base} aria-label="TOXBOX Home">
-          <span class="dot" aria-hidden="true"></span>
-          <span>TOXBOX</span>
+          <picture>
+            <source srcset={`${base}logo-light.svg`} media="(prefers-color-scheme: light)" />
+            <img class="brandLogo" src={`${base}logo-dark.svg`} alt="TOXBOX" />
+          </picture>
         </a>
         <nav class="toplinks" aria-label="Primary">
           <a class="btn" href={`${base}docs/getting-started/`}>Docs</a>
@@ -370,8 +366,7 @@ const base = import.meta.env.BASE_URL;
           </div>
 
           <div class="shot" aria-label="Visual preview">
-            <img src={houston.src} width={houston.width} height={houston.height} alt="TOXBOX visual preview" loading="eager" />
-            <div class="shotTag">Live-ready workflow</div>
+            <img src={thumbnail.src} width={thumbnail.width} height={thumbnail.height} alt="TOXBOX preview" loading="eager" />
           </div>
         </div>
       </section>
