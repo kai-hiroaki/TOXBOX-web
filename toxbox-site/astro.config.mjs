@@ -28,11 +28,17 @@ export default defineConfig({
           items: [
             { label: "Getting Started", slug: "docs/getting-started" },
             { label: "Concept", slug: "docs/concept" },
-            { label: "Tutorials", slug: "docs/tutorials" },
+            { label: "UI Guide", slug: "docs/ui-guide" },
+            {
+              label: "Tutorials",
+              collapsed: true,
+              autogenerate: { directory: "docs/tutorials" },
+            },
+            { label: "Creating tox", slug: "docs/creating-tox" },
             { label: "Reference", slug: "docs/reference" },
             { label: "Troubleshooting", slug: "docs/troubleshooting" },
-            { label: "License", slug: "docs/license" },
             { label: "Changelog", slug: "docs/changelog" },
+            { label: "License", slug: "docs/license" },
           ],
         },
         {

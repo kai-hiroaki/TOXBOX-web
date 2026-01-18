@@ -1,11 +1,73 @@
 ---
-title: Docs
-description: TOXBOX ドキュメントの入り口
+title: Documentation
+description: TOXBOX ドキュメント - TouchDesigner VJツールの使い方ガイド
 ---
 
-TOXBOX のドキュメントです。まずは **Getting Started** を読んでください。
+import { Card, CardGrid, LinkCard } from "@astrojs/starlight/components";
 
-- [Getting Started](getting-started/)
-- [Reference](reference/)
-- [License](license/)
-- [Changelog](changelog/)
+TOXBOX は TouchDesigner で作成した tox ファイルを読み込み、**すぐに VJ パフォーマンスを始められる**ツールです。
+
+## クイックスタート
+
+<CardGrid>
+  <LinkCard
+    title="はじめに"
+    description="ダウンロードからセットアップ、最初のビジュアル出力まで"
+    href="getting-started/"
+  />
+  <LinkCard
+    title="コンセプト"
+    description="TOXBOXの設計思想と「なぜtoxを使うのか」を理解する"
+    href="concept/"
+  />
+</CardGrid>
+
+## 使い方を学ぶ
+
+<CardGrid>
+  <LinkCard
+    title="UIガイド"
+    description="各パネルの役割と操作方法を把握する"
+    href="ui-guide/"
+  />
+  <LinkCard
+    title="チュートリアル"
+    description="tox読み込み、オーディオ解析、シーケンサーなど実践的な使い方"
+    href="tutorials/"
+  />
+</CardGrid>
+
+## 発展
+
+<CardGrid>
+  <LinkCard
+    title="tox作成ガイド"
+    description="TOXBOX用のtoxを自作する方法"
+    href="creating-tox/"
+  />
+  <LinkCard
+    title="リファレンス"
+    description="機能・パラメータの詳細一覧"
+    href="reference/"
+  />
+</CardGrid>
+
+## サポート
+
+<CardGrid>
+  <LinkCard
+    title="トラブルシューティング"
+    description="よくある問題と解決策"
+    href="troubleshooting/"
+  />
+  <LinkCard
+    title="更新履歴"
+    description="バージョン履歴と変更内容"
+    href="changelog/"
+  />
+</CardGrid>
+
+## 動作環境
+
+- **TouchDesigner**: 2025.32050 以降
+- **OS**: TouchDesigner が動作する環境（Windows / macOS）
