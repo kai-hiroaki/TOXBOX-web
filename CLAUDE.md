@@ -1,50 +1,64 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+このファイルは、Claude Code (claude.ai/code) がこのリポジトリで作業する際のガイダンスを提供します。
 
-## Language
+## 言語
 
-Respond in Japanese.
+日本語で応答してください。
 
-## Project Overview
+## プロジェクト概要
 
-TOXBOX-web is a static website for a TouchDesigner VJ tool. It combines:
-- Landing page (LP) with product promotion via Booth marketplace
-- Technical documentation using Starlight
-- Releases page (scaffolded, future GitHub API integration)
+TOXBOX-webは、TouchDesigner VJツールの静的ウェブサイトです。以下の要素で構成されています:
+- Boothマーケットプレイスでの製品プロモーション用ランディングページ（LP）
+- Starlightを使用した技術ドキュメント
+- リリースページ（スキャフォールド済み、将来的にGitHub API連携予定）
 
-## Development Commands
+## 開発コマンド
 
-All commands run from `toxbox-site/` directory:
+すべてのコマンドは `toxbox-site/` ディレクトリから実行します:
 
 ```bash
-npm ci              # Install dependencies (clean install)
-npm run dev         # Start dev server at http://localhost:4321
-npm run build       # Build static site to dist/
-npm run preview     # Preview production build locally
+npm ci              # 依存関係をクリーンインストール
+npm run dev         # 開発サーバーを http://localhost:4321 で起動
+npm run build       # 静的サイトを dist/ にビルド
+npm run preview     # 本番ビルドをローカルでプレビュー
 ```
 
-## Architecture
+## アーキテクチャ
 
-**Tech Stack**: Astro 5.x + Starlight + Sharp (image processing)
+**技術スタック**: Astro 5.x + Starlight + Sharp（画像処理）
 
-**Directory Structure**:
-- `toxbox-site/` - Main Astro project (build target for GitHub Pages)
-- `docs/` - Internal development documentation (not deployed)
+**ディレクトリ構造**:
+- `toxbox-site/` - メインのAstroプロジェクト（GitHub Pagesへのデプロイ対象）
 
-**Key Files**:
-- `toxbox-site/astro.config.mjs` - Astro/Starlight config, sidebar definition
-- `toxbox-site/src/pages/` - Route pages (file-based routing)
-- `toxbox-site/src/content/docs/docs/` - Starlight documentation content (MDX/MD)
+**主要ファイル**:
+- `toxbox-site/astro.config.mjs` - Astro/Starlight設定、サイドバー定義
+- `toxbox-site/src/pages/` - ルートページ（ファイルベースルーティング）
+- `toxbox-site/src/content/docs/docs/` - Starlightドキュメントコンテンツ（MDX/MD）
 
-**Environment-Aware Deployment**:
-The config reads `ASTRO_SITE` and `ASTRO_BASE` env vars for GitHub Pages subpath hosting. These are set by the deploy workflow.
+**環境対応デプロイ**:
+設定ファイルは `ASTRO_SITE` と `ASTRO_BASE` 環境変数を読み込み、GitHub Pagesのサブパスホスティングに対応しています。これらはデプロイワークフローで設定されます。
 
-## Important Guidelines
+## Releases ページ方針
 
-- **Public vs Internal Docs**: User-facing docs go in `toxbox-site/src/content/docs/`. The `docs/` folder at repo root is internal/non-public.
-- **Build Target**: Only `toxbox-site/` is deployed to GitHub Pages.
-- **Commit Messages**: Use English for clarity and to avoid encoding issues.
-- **Deploy Workflow**: `.github/workflows/deploy.yml` deploys on push to `main`. Make changes carefully.
-- **GitHub Link Placeholder**: `astro.config.mjs` contains `<OWNER>/<REPO>` placeholder that needs updating.
-- **Video Files**: Excluded from git via `.gitignore` (large hero video assets).
+**現状**:
+- `toxbox-site/src/pages/releases.astro` はスタブ表示
+- `toxbox-site/src/content/docs/docs/changelog.md` に暫定の更新履歴がある
+
+**方針（目標）**:
+- 一次情報は GitHub Releases に寄せる
+- Web 側で二重管理しない（Changelog の手入力を減らす）
+
+**実装タスク案**:
+- GitHub API から Releases を取得して一覧表示する
+- 各リリースの本文（Markdown）を整形して表示する
+- 取得失敗時は `docs/changelog.md` への導線を出す（暫定運用）
+
+## 重要なガイドライン
+
+- **公開ドキュメント**: ユーザー向けドキュメントは `toxbox-site/src/content/docs/` に配置します。
+- **ビルド対象**: GitHub Pagesにデプロイされるのは `toxbox-site/` のみです。
+- **コミットメッセージ**: 明確さとエンコーディング問題を避けるため、英語で記述してください。
+- **デプロイワークフロー**: `.github/workflows/deploy.yml` は `main` へのプッシュ時にデプロイします。変更は慎重に行ってください。
+- **GitHubリンクプレースホルダー**: `astro.config.mjs` には更新が必要な `<OWNER>/<REPO>` プレースホルダーが含まれています。
+- **動画ファイル**: `.gitignore` でgitから除外されています（大容量のヒーロー動画アセット）。
