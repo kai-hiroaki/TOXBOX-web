@@ -22,31 +22,31 @@ export default defineConfig({
       },
       sidebar: [
         {
-          label: "Docs",
+          label: "ドキュメント",
           items: [
-            { label: "Getting Started", slug: "docs/getting-started" },
-            { label: "Concept", slug: "docs/concept" },
-            { label: "UI Guide", slug: "docs/ui-guide" },
+            { label: "ようこそ", slug: "docs/concept" },
+            { label: "クイックスタート", slug: "docs/getting-started" },
+            { label: "UIガイド", slug: "docs/ui-guide" },
             {
-              label: "Tutorials",
+              label: "チュートリアル",
               collapsed: true,
               autogenerate: { directory: "docs/tutorials" },
             },
-            { label: "Creating tox", slug: "docs/creating-tox" },
-            { label: "Reference", slug: "docs/reference" },
-            { label: "Troubleshooting", slug: "docs/troubleshooting" },
-            { label: "License", slug: "docs/license" },
+            { label: "toxの作成", slug: "docs/creating-tox" },
+            { label: "リファレンス", slug: "docs/reference" },
+            { label: "トラブルシューティング", slug: "docs/troubleshooting" },
+            { label: "ライセンス", slug: "docs/license" },
           ],
         },
         {
-          label: "Releases",
+          label: "リリース",
           items: [{ label: "更新履歴", slug: "docs/releases" }],
         },
         {
-          label: "Links",
+          label: "リンク",
           items: [
             {
-              label: "Buy on Booth",
+              label: "BOOTHで購入",
               link: "https://simijimishijimi.booth.pm/items/7592348",
             },
           ],
