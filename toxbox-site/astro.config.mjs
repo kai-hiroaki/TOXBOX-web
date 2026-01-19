@@ -27,6 +27,7 @@ export default defineConfig({
             { label: "ようこそ", slug: "docs/concept" },
             { label: "クイックスタート", slug: "docs/getting-started" },
             { label: "UIガイド", slug: "docs/ui-guide" },
+            { label: "コンセプト", slug: "docs/philosophy" },
             {
               label: "チュートリアル",
               collapsed: true,
