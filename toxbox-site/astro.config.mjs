@@ -35,14 +35,13 @@ export default defineConfig({
             { label: "Creating tox", slug: "docs/creating-tox" },
             { label: "Reference", slug: "docs/reference" },
             { label: "Troubleshooting", slug: "docs/troubleshooting" },
-            { label: "Changelog", slug: "docs/changelog" },
+            { label: "Releases", slug: "docs/releases" },
             { label: "License", slug: "docs/license" },
           ],
         },
         {
           label: "Links",
           items: [
-            { label: "Releases", link: "/releases" },
             {
               label: "Buy on Booth",
               link: "https://simijimishijimi.booth.pm/items/7592348",
