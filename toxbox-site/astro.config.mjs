@@ -35,9 +35,12 @@ export default defineConfig({
             { label: "Creating tox", slug: "docs/creating-tox" },
             { label: "Reference", slug: "docs/reference" },
             { label: "Troubleshooting", slug: "docs/troubleshooting" },
-            { label: "Releases", slug: "docs/releases" },
             { label: "License", slug: "docs/license" },
           ],
+        },
+        {
+          label: "Releases",
+          items: [{ label: "更新履歴", slug: "docs/releases" }],
         },
         {
           label: "Links",
