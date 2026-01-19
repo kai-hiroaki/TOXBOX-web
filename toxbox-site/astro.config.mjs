@@ -17,6 +17,9 @@ export default defineConfig({
         replacesTitle: true,
       },
       customCss: ["./src/styles/starlight.css"],
+      components: {
+        Header: "./src/components/Header.astro",
+      },
       sidebar: [
         {
           label: "Docs",
