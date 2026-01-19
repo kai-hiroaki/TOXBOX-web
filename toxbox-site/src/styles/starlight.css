@@ -1,0 +1,13 @@
+/* Starlight custom styles */
+
+/* Logo size to match LP (28px desktop, 24px mobile) */
+.site-title img {
+  height: 28px !important;
+  width: auto !important;
+}
+
+@media (max-width: 480px) {
+  .site-title img {
+    height: 24px !important;
+  }
+}

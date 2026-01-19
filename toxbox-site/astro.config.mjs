@@ -14,14 +14,9 @@ export default defineConfig({
         light: "./src/assets/logo-light.svg",
         dark: "./src/assets/logo-dark.svg",
         alt: "TOXBOX",
+        replacesTitle: true,
       },
-      social: [
-        {
-          icon: "github",
-          label: "GitHub",
-          href: "https://github.com/<OWNER>/<REPO>",
-        },
-      ],
+      customCss: ["./src/styles/starlight.css"],
       sidebar: [
         {
           label: "Docs",
