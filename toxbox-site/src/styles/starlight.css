@@ -1,5 +1,24 @@
 /* Starlight custom styles */
 
+/* Match LP header layout */
+:root {
+  --sl-nav-height: 64px;
+  --sl-nav-pad-x: clamp(16px, 4vw, 24px);
+}
+
+@media (min-width: 50em) {
+  :root {
+    --sl-nav-height: 64px;
+    --sl-nav-pad-x: clamp(16px, 4vw, 24px);
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --sl-nav-height: 56px;
+  }
+}
+
 /* Logo size to match LP (28px desktop, 24px mobile) */
 .site-title img {
   height: 28px !important;

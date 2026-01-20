@@ -1,5 +1,5 @@
 ---
-title: ようこそ
+title: TOXBOXドキュメント
 description: TOXBOX ドキュメントへようこそ
 ---
 
