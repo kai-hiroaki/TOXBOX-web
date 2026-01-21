@@ -1,14 +1,20 @@
 ---
 import { fetchGitHubReleases, formatDate } from "../lib/github";
-import { Markdown } from "@astropub/md";
+import { marked } from "marked";
 
 const releases = await fetchGitHubReleases();
+
+// Markdownをパースしてリリース情報に追加
+const releasesWithHtml = releases.map((release) => ({
+  ...release,
+  bodyHtml: release.body ? marked.parse(release.body) : "",
+}));
 ---
 
 {
-  releases.length > 0 ? (
+  releasesWithHtml.length > 0 ? (
     <div class="release-list">
-      {releases.map((release) => (
+      {releasesWithHtml.map((release) => (
         <article class="release-item">
           <header class="release-header">
             <h2>
@@ -21,8 +27,8 @@ const releases = await fetchGitHubReleases();
               {formatDate(release.published_at)}
             </time>
           </header>
-          {release.body && (
-            <div class="release-body" set:html={release.body} />
+          {release.bodyHtml && (
+            <div class="release-body" set:html={release.bodyHtml} />
           )}
         </article>
       ))}
