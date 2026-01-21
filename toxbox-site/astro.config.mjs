@@ -40,8 +40,8 @@ export default defineConfig({
           ],
         },
         {
-          label: "リリース",
-          items: [{ label: "更新履歴", slug: "docs/releases" }],
+          label: "リリースノート",
+          items: [{ label: "リリースノート", slug: "docs/releases" }],
         },
         {
           label: "リンク",

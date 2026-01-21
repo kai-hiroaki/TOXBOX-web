@@ -11,7 +11,7 @@
 TOXBOX-webは、TouchDesigner VJツールの静的ウェブサイトです。以下の要素で構成されています:
 - Boothマーケットプレイスでの製品プロモーション用ランディングページ（LP）
 - Starlightを使用した技術ドキュメント
-- リリースページ（スキャフォールド済み、将来的にGitHub API連携予定）
+- リリースノートページ（GitHub API連携済み）
 
 ## 開発コマンド
 
@@ -39,10 +39,10 @@ npm run preview     # 本番ビルドをローカルでプレビュー
 **環境対応デプロイ**:
 設定ファイルは `ASTRO_SITE` と `ASTRO_BASE` 環境変数を読み込み、GitHub Pagesのサブパスホスティングに対応しています。これらはデプロイワークフローで設定されます。
 
-## Releases ページ
+## リリースノートページ
 
 **実装**:
-- `toxbox-site/src/content/docs/docs/releases.mdx` でGitHub APIからリリース情報を取得
+- `toxbox-site/src/content/docs/docs/releases.mdx` でGitHub APIからリリースノートを取得
 - `toxbox-site/src/lib/github.ts` にAPI取得ロジック
 - `toxbox-site/src/components/ReleaseList.astro` で表示
 
