@@ -42,17 +42,12 @@ npm run preview     # 本番ビルドをローカルでプレビュー
 ## Releases ページ方針
 
 **現状**:
-- `toxbox-site/src/pages/releases.astro` はスタブ表示
-- `toxbox-site/src/content/docs/docs/changelog.md` に暫定の更新履歴がある
+- `toxbox-site/src/content/docs/docs/releases.md` に更新履歴を記載
+- Starlightドキュメントに統合済み
 
-**方針（目標）**:
-- 一次情報は GitHub Releases に寄せる
-- Web 側で二重管理しない（Changelog の手入力を減らす）
-
-**実装タスク案**:
-- GitHub API から Releases を取得して一覧表示する
-- 各リリースの本文（Markdown）を整形して表示する
-- 取得失敗時は `docs/changelog.md` への導線を出す（暫定運用）
+**方針（将来）**:
+- 一次情報は GitHub Releases に寄せることを検討
+- GitHub API から Releases を取得して一覧表示する実装も選択肢
 
 ## 重要なガイドライン
 
