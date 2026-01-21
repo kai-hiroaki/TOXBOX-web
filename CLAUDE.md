@@ -39,15 +39,24 @@ npm run preview     # 本番ビルドをローカルでプレビュー
 **環境対応デプロイ**:
 設定ファイルは `ASTRO_SITE` と `ASTRO_BASE` 環境変数を読み込み、GitHub Pagesのサブパスホスティングに対応しています。これらはデプロイワークフローで設定されます。
 
-## Releases ページ方針
+## Releases ページ
 
-**現状**:
-- `toxbox-site/src/content/docs/docs/releases.md` に更新履歴を記載
-- Starlightドキュメントに統合済み
+**実装**:
+- `toxbox-site/src/content/docs/docs/releases.mdx` でGitHub APIからリリース情報を取得
+- `toxbox-site/src/lib/github.ts` にAPI取得ロジック
+- `toxbox-site/src/components/ReleaseList.astro` で表示
 
-**方針（将来）**:
-- 一次情報は GitHub Releases に寄せることを検討
-- GitHub API から Releases を取得して一覧表示する実装も選択肢
+**GitHub Token設定（プライベートリポジトリ用）**:
+1. GitHubで Personal Access Token (classic) を作成
+   - スコープ: `repo` (プライベートリポジトリへのアクセス)
+2. TOXBOX-webリポジトリの Settings > Secrets and variables > Actions で
+   - Name: `TOXBOX_RELEASES_TOKEN`
+   - Value: 作成したトークン
+
+**ローカル開発**:
+```bash
+GITHUB_TOKEN=your_token npm run dev
+```
 
 ## 重要なガイドライン
 

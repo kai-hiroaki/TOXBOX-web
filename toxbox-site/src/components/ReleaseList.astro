@@ -1,0 +1,148 @@
+---
+import { fetchGitHubReleases, formatDate } from "../lib/github";
+import { Markdown } from "@astropub/md";
+
+const releases = await fetchGitHubReleases();
+---
+
+{
+  releases.length > 0 ? (
+    <div class="release-list">
+      {releases.map((release) => (
+        <article class="release-item">
+          <header class="release-header">
+            <h2>
+              <a href={release.html_url} target="_blank" rel="noopener noreferrer">
+                {release.name || release.tag_name}
+              </a>
+              {release.prerelease && <span class="prerelease-badge">Pre-release</span>}
+            </h2>
+            <time datetime={release.published_at}>
+              {formatDate(release.published_at)}
+            </time>
+          </header>
+          {release.body && (
+            <div class="release-body" set:html={release.body} />
+          )}
+        </article>
+      ))}
+    </div>
+  ) : (
+    <div class="no-releases">
+      <p>リリース情報を取得できませんでした。</p>
+      <p>
+        <a
+          href="https://github.com/kai-hiroaki/TOXBOX/releases"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          GitHub Releases で直接確認する →
+        </a>
+      </p>
+    </div>
+  )
+}
+
+<style>
+  .release-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .release-item {
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+  }
+
+  .release-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5rem 1rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--sl-color-gray-6);
+  }
+
+  .release-header h2 {
+    margin: 0;
+    font-size: 1.25rem;
+  }
+
+  .release-header h2 a {
+    color: var(--sl-color-white);
+    text-decoration: none;
+  }
+
+  .release-header h2 a:hover {
+    text-decoration: underline;
+  }
+
+  .prerelease-badge {
+    display: inline-block;
+    margin-left: 0.5rem;
+    padding: 0.125rem 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    background-color: var(--sl-color-orange);
+    color: var(--sl-color-black);
+    border-radius: 0.25rem;
+    vertical-align: middle;
+  }
+
+  .release-header time {
+    color: var(--sl-color-gray-3);
+    font-size: 0.875rem;
+  }
+
+  .release-body {
+    font-size: 0.9375rem;
+    line-height: 1.6;
+  }
+
+  .release-body :global(h1),
+  .release-body :global(h2),
+  .release-body :global(h3) {
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .release-body :global(h1:first-child),
+  .release-body :global(h2:first-child),
+  .release-body :global(h3:first-child) {
+    margin-top: 0;
+  }
+
+  .release-body :global(ul),
+  .release-body :global(ol) {
+    padding-left: 1.5rem;
+  }
+
+  .release-body :global(li) {
+    margin-bottom: 0.25rem;
+  }
+
+  .release-body :global(code) {
+    padding: 0.125rem 0.25rem;
+    background-color: var(--sl-color-gray-6);
+    border-radius: 0.25rem;
+    font-size: 0.875em;
+  }
+
+  .no-releases {
+    padding: 2rem;
+    text-align: center;
+    background-color: var(--sl-color-gray-6);
+    border-radius: 0.5rem;
+  }
+
+  .no-releases p {
+    margin: 0.5rem 0;
+  }
+
+  .no-releases a {
+    color: var(--sl-color-accent);
+  }
+</style>
