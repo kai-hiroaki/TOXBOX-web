@@ -34,6 +34,7 @@ jobs:
         env:
           ASTRO_SITE: https://${{ github.repository_owner }}.github.io
           ASTRO_BASE: /${{ github.event.repository.name }}/
+          GITHUB_TOKEN: ${{ secrets.TOXBOX_RELEASES_TOKEN }}
         run: npm run build
 
       - name: Upload Pages Artifact
