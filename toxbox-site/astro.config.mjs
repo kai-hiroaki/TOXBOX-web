@@ -24,10 +24,10 @@ export default defineConfig({
         {
           label: "ドキュメント",
           items: [
-            { label: "ようこそ", slug: "docs/concept" },
+            { label: "ようこそ", slug: "docs/welcome" },
             { label: "クイックスタート", slug: "docs/getting-started" },
             { label: "UIガイド", slug: "docs/ui-guide" },
-            { label: "コンセプト", slug: "docs/philosophy" },
+            { label: "コンセプト", slug: "docs/concept" },
             {
               label: "チュートリアル",
               collapsed: true,
