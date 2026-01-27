@@ -294,8 +294,8 @@ TOXBOX/
 
 ## 関連ドキュメント
 
-- **[はじめに](getting-started/)**: セットアップ手順
-- **[UIガイド](ui-guide/)**: 各パネルの操作方法
-- **[チュートリアル](tutorials/)**: 実践的な使い方
-- **[tox作成ガイド](creating-tox/)**: カスタム tox の作成
-- **[トラブルシューティング](troubleshooting/)**: 問題解決
+- **[はじめに](../getting-started/)**: セットアップ手順
+- **[UIガイド](../ui-guide/)**: 各パネルの操作方法
+- **[チュートリアル](../tutorials/)**: 実践的な使い方
+- **[tox作成ガイド](../creating-tox/)**: カスタム tox の作成
+- **[トラブルシューティング](../troubleshooting/)**: 問題解決

@@ -206,7 +206,7 @@ TouchDesigner のメニューから `Dialogs` → `Performance Monitor` を開�
 
 **対処**:
 - tox のカスタムパラメータを確認
-- [tox作成ガイド](creating-tox/) を参照して形式を確認
+- [tox作成ガイド](../creating-tox/) を参照して形式を確認
 
 ---
 

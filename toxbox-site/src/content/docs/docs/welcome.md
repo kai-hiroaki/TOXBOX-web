@@ -5,6 +5,8 @@ description: TOXBOX ドキュメントへようこそ
 
 **TOXBOX** は、TouchDesigner で作成したシーン（tox）をそのまま読み込み、VJ パフォーマンスを始められるツールです。
 
+![toxbox_img](/images/welcome.png)
+
 ## 主な機能
 
 - **tox 読み込み**: ドラッグ＆ドロップでシーンを追加
@@ -16,6 +18,6 @@ description: TOXBOX ドキュメントへようこそ
 
 ## 次のステップ
 
-- **[クイックスタート](getting-started/)**: セットアップと基本操作
-- **[UIガイド](ui-guide/)**: 各パネルの操作方法
-- **[コンセプト](concept/)**: 設計思想と仕組みを詳しく
+- **[クイックスタート](../getting-started/)**: セットアップと基本操作
+- **[UIガイド](../ui-guide/)**: 各パネルの操作方法
+- **[コンセプト](../concept/)**: 設計思想と仕組みを詳しく

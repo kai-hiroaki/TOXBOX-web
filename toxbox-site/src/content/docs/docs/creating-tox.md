@@ -199,6 +199,6 @@ parent().par.Brightness
 
 ## 次のステップ
 
-- **[オーディオ解析チュートリアル](tutorials/audio-analysis/)**: パラメータとオーディオを連携
-- **[シーケンサーチュートリアル](tutorials/sequencer/)**: パラメータとシーケンサーを連携
-- **[リファレンス](reference/)**: TOXBOX の仕様詳細
+- **[オーディオ解析チュートリアル](../tutorials/audio-analysis/)**: パラメータとオーディオを連携
+- **[シーケンサーチュートリアル](../tutorials/sequencer/)**: パラメータとシーケンサーを連携
+- **[リファレンス](../reference/)**: TOXBOX の仕様詳細
