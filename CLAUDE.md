@@ -29,7 +29,7 @@ npm run preview     # 本番ビルドをローカルでプレビュー
 **技術スタック**: Astro 5.x + Starlight + Sharp（画像処理）
 
 **ディレクトリ構造**:
-- `toxbox-site/` - メインのAstroプロジェクト（GitHub Pagesへのデプロイ対象）
+- `toxbox-site/` - メインのAstroプロジェクト（Cloudflare Pagesへのデプロイ対象）
 
 **主要ファイル**:
 - `toxbox-site/astro.config.mjs` - Astro/Starlight設定、サイドバー定義
@@ -37,7 +37,7 @@ npm run preview     # 本番ビルドをローカルでプレビュー
 - `toxbox-site/src/content/docs/docs/` - Starlightドキュメントコンテンツ（MDX/MD）
 
 **環境対応デプロイ**:
-設定ファイルは `ASTRO_SITE` と `ASTRO_BASE` 環境変数を読み込み、GitHub Pagesのサブパスホスティングに対応しています。これらはデプロイワークフローで設定されます。
+設定ファイルは `ASTRO_SITE` 環境変数を読み込みます。Cloudflare Pagesのダッシュボードで設定されます。`ASTRO_BASE` はデフォルト `/` のため設定不要です。
 
 ## リリースノートページ
 
@@ -49,8 +49,8 @@ npm run preview     # 本番ビルドをローカルでプレビュー
 **GitHub Token設定（プライベートリポジトリ用）**:
 1. GitHubで Personal Access Token (classic) を作成
    - スコープ: `repo` (プライベートリポジトリへのアクセス)
-2. TOXBOX-webリポジトリの Settings > Secrets and variables > Actions で
-   - Name: `TOXBOX_RELEASES_TOKEN`
+2. Cloudflare Pagesダッシュボードの Settings > Environment variables で設定:
+   - Name: `GITHUB_TOKEN`
    - Value: 作成したトークン
 
 **ローカル開発**:
@@ -61,8 +61,8 @@ GITHUB_TOKEN=your_token npm run dev
 ## 重要なガイドライン
 
 - **公開ドキュメント**: ユーザー向けドキュメントは `toxbox-site/src/content/docs/` に配置します。
-- **ビルド対象**: GitHub Pagesにデプロイされるのは `toxbox-site/` のみです。
+- **ビルド対象**: Cloudflare Pagesにデプロイされるのは `toxbox-site/` のみです。
 - **コミットメッセージ**: 日本語で記述してください。
-- **デプロイワークフロー**: `.github/workflows/deploy.yml` は `main` へのプッシュ時にデプロイします。変更は慎重に行ってください。
+- **デプロイ**: Cloudflare Pagesダッシュボードでリポジトリと接続済み。`main` へのプッシュで自動デプロイされます。GitHub Actionsワークフローは不要です。
 - **GitHubリンクプレースホルダー**: `astro.config.mjs` には更新が必要な `<OWNER>/<REPO>` プレースホルダーが含まれています。
 - **動画ファイル**: `.gitignore` でgitから除外されています（大容量のヒーロー動画アセット）。
