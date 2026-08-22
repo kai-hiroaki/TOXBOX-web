@@ -176,6 +176,13 @@ main {
   padding-top: 64px;
 }
 
+/* 固定ヘッダーにアンカー位置が隠れないようにする */
+.about,
+.features,
+.video-section {
+  scroll-margin-top: 64px;
+}
+
 /* ========================================
    Hero Section
    ======================================== */
@@ -254,13 +261,6 @@ main {
   margin-bottom: clamp(16px, 3vw, 20px);
 }
 
-.hero h1 span {
-  background: linear-gradient(135deg, var(--accent) 0%, #4ade80 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
 .hero-lead {
   font-size: clamp(14px, 2.5vw, 18px);
   color: #fff;
@@ -308,16 +308,11 @@ main {
   white-space: nowrap;
 }
 
-.btn-primary {
-  background: var(--accent);
-  color: var(--bg);
-  box-shadow: 0 0 40px var(--accent-glow);
-}
-
-.btn-primary:hover {
-  background: var(--accent-dark);
-  transform: translateY(-2px);
-  box-shadow: 0 0 60px var(--accent-glow);
+/* 主 CTA（BOOTH）を副 CTA より視覚的に大きくする */
+.btn-lg {
+  padding: clamp(14px, 2.5vw, 18px) clamp(28px, 4vw, 40px);
+  min-height: 52px;
+  font-size: clamp(15px, 2.2vw, 18px);
 }
 
 .btn-secondary {
@@ -433,7 +428,12 @@ main {
   background: rgba(34, 197, 94, 0.1);
   border-radius: 12px;
   margin-bottom: 16px;
-  font-size: clamp(20px, 3vw, 24px);
+}
+
+.feature-icon svg {
+  width: clamp(20px, 3vw, 24px);
+  height: clamp(20px, 3vw, 24px);
+  fill: var(--accent);
 }
 
 .feature-title {
@@ -622,6 +622,12 @@ main {
     padding-top: 56px;
   }
 
+  .about,
+  .features,
+  .video-section {
+    scroll-margin-top: 56px;
+  }
+
   .hero {
     min-height: calc(100vh - 56px);
     min-height: calc(100dvh - 56px);
@@ -646,10 +652,6 @@ main {
   .about-title {
     flex-direction: column;
     gap: 8px;
-  }
-
-  .feature-card {
-    text-align: left;
   }
 
   .footer-left {
