@@ -8,7 +8,10 @@
       "Bash(git push:*)",
       "Bash(npm run build:*)",
       "WebFetch(domain:simijimishijimi.booth.pm)",
-      "WebFetch(domain:note.com)"
+      "WebFetch(domain:note.com)",
+      "Bash(npm run check-links:*)",
+      "WebFetch(domain:developers.cloudflare.com)",
+      "Bash(claude plugin *)"
     ]
   }
 }
