@@ -8,6 +8,8 @@
 
 ## プロジェクト概要
 
+**公開URL**: https://toxbox.sijimi.workers.dev
+
 TOXBOX-webは、TouchDesigner VJツールの静的ウェブサイトです。以下の要素で構成されています:
 
 - Boothマーケットプレイスでの製品プロモーション用ランディングページ（LP）
@@ -41,7 +43,7 @@ npm run preview     # 本番ビルドをローカルでプレビュー
 - `toxbox-site/src/content/docs/docs/` - Starlightドキュメントコンテンツ（MDX/MD）
 
 **環境対応デプロイ**:
-設定ファイルは `ASTRO_SITE` 環境変数を読み込みます。Cloudflareダッシュボードの Worker `toxbox` の設定で指定します。`ASTRO_BASE` はデフォルト `/` のため設定不要です。
+設定ファイルは `ASTRO_SITE` 環境変数を読み込みます。Cloudflareダッシュボードの Worker `toxbox` の設定で指定します。値は `https://toxbox.sijimi.workers.dev` です。`ASTRO_BASE` はデフォルト `/` のため設定不要です。
 
 ## リリースノートページ
 
